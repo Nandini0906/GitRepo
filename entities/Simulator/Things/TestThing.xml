@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Entities
+ build="b2219"
+ majorVersion="8"
+ minorVersion="4"
+ modelPersistenceProviderPackage="PostgresPersistenceProviderPackage"
+ revision="3"
+ schemaVersion="1041"
+ universal="password">
+    <Things>
+        <Thing
+         description=""
+         documentationContent=""
+         effectiveThingPackage="ConfiguredThing"
+         enabled="true"
+         homeMashup=""
+         identifier=""
+         lastModifiedDate="2020-06-30T11:38:12.212Z"
+         name="TestThing"
+         projectName="Simulator"
+         published="false"
+         tags=""
+         thingTemplate="GenericThing"
+         valueStream="">
+            <avatar></avatar>
+            <DesignTimePermissions>
+                <Create></Create>
+                <Read></Read>
+                <Update></Update>
+                <Delete></Delete>
+                <Metadata></Metadata>
+            </DesignTimePermissions>
+            <RunTimePermissions></RunTimePermissions>
+            <VisibilityPermissions>
+                <Visibility></Visibility>
+            </VisibilityPermissions>
+            <ConfigurationTableDefinitions></ConfigurationTableDefinitions>
+            <ConfigurationTables></ConfigurationTables>
+            <ThingShape>
+                <PropertyDefinitions></PropertyDefinitions>
+                <ServiceDefinitions></ServiceDefinitions>
+                <EventDefinitions></EventDefinitions>
+                <ServiceMappings></ServiceMappings>
+                <ServiceImplementations>
+                    <ServiceImplementation
+                     description=""
+                     handlerName="Script"
+                     name="RunAllTests">
+                        <ConfigurationTables>
+                            <ConfigurationTable
+                             description=""
+                             isMultiRow="false"
+                             name="Script"
+                             ordinal="0">
+                                <DataShape>
+                                    <FieldDefinitions>
+                                        <FieldDefinition
+                                         baseType="STRING"
+                                         description="code"
+                                         name="code"
+                                         ordinal="0"></FieldDefinition>
+                                    </FieldDefinitions>
+                                </DataShape>
+                                <Rows>
+                                    <Row>
+                                        <code>
+                                        <![CDATA[
+                                        //1. Initializing the test data. Optional.
+                                        me.CreateTestData();
+                                        
+                                        //2. Create a variable that will store all the results 
+                                        var result= Resources["InfoTableFunctions"].CreateInfoTableFromDataShape({
+                                            infoTableName : "InfoTable",
+                                            dataShapeName : "TestResultData"
+                                        });
+                                        
+                                        // TestResultData entry object
+                                        var firstEntry = new Object();
+                                        firstEntry.comments = "test result that passed the verification"; // STRING
+                                        firstEntry.inputParams = {"name" : "Mike" }; // JSON
+                                        firstEntry.expectedOutput = {"name" : "Mike" }; // JSON
+                                        firstEntry.passed = true; // BOOLEAN
+                                        firstEntry.testName = "test from username passed"; // STRING [Primary Key]
+                                        firstEntry.timestamp = new Date(); // DATETIME [Primary Key]
+                                        result.AddRow(firstEntry);
+                                        
+                                        var SecondEntry = new Object();
+                                        SecondEntry.comments = "test result that passed the verification"; // STRING
+                                        SecondEntry.inputParams = {"name" : "John" }; // JSON
+                                        SecondEntry.expectedOutput = {"name" : "Mike" }; // JSON
+                                        SecondEntry.passed = false; // BOOLEAN
+                                        SecondEntry.testName = "test from username passed"; // STRING [Primary Key]
+                                        SecondEntry.timestamp = new Date(); // DATETIME [Primary Key]
+                                        result.AddRow(firstEntry);
+                                        result.AddRow(SecondEntry);
+                                        
+                                        ////3. Search all the services in the category Test and execute them.
+                                        ////Each service accepts as an input the previous test results, and adds to that infotable its result
+                                        //var iftbl_Tests =  me.GetServiceDefinitions({
+                                        //	category: "Test" /* STRING */,
+                                        //});
+                                        //
+                                        //for each (var test in iftbl_Tests.rows) {   
+                                        //    prevTestResult=me[test.name]({PreviousTestResults:prevTestResult});  
+                                        //}
+                                        ////4. delete test data
+                                        //me.DeleteTestData();
+                                        //result = prevTestResult;
+                                        ]]>
+                                        </code>
+                                    </Row>
+                                </Rows>
+                            </ConfigurationTable>
+                        </ConfigurationTables>
+                    </ServiceImplementation>
+                </ServiceImplementations>
+                <Subscriptions></Subscriptions>
+            </ThingShape>
+            <PropertyBindings></PropertyBindings>
+            <RemotePropertyBindings></RemotePropertyBindings>
+            <RemoteServiceBindings></RemoteServiceBindings>
+            <RemoteEventBindings></RemoteEventBindings>
+            <AlertConfigurations></AlertConfigurations>
+            <ImplementedShapes>
+                <ImplementedShape
+                 name="TestingTS"
+                 type="ThingShape"></ImplementedShape>
+            </ImplementedShapes>
+            <ThingProperties></ThingProperties>
+        </Thing>
+    </Things>
+</Entities>
